@@ -8,10 +8,10 @@ import (
 type User struct {
 	gorm.Model
 
-	ID              int
-	Name            string
-	Email           string
-	Password        string
-	EmailVerifiedAt time.Time
-	CreatedAt       time.Time
+	ID              int       `gorm:"primarykey" json:"id"`
+	Name            string    `json:"name"`
+	Email           string    `json:"email"`
+	Password        string    `json:"password"`
+	EmailVerifiedAt time.Time `json:"email_verified_at"`
+	CreatedAt       time.Time `json:"created_at"`
 }
