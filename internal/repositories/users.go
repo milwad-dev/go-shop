@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"fmt"
 	"github.com/milwad-dev/go-shop/internal/models"
 	"gorm.io/gorm"
 )
@@ -31,6 +30,6 @@ func (repo *UserRepo) FindUserById(id int) models.User {
 	var user models.User
 
 	repo.db.First(&user, id)
-	fmt.Println(user.Name)
+
 	return user
 }

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/milwad-dev/go-shop/internal"
 	"github.com/milwad-dev/go-shop/internal/repositories"
@@ -33,7 +32,6 @@ func (handler *Handler) UserShow(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 	userId, _ := strconv.Atoi(id)
 
-	fmt.Println(id, userId)
 	user := handler.repo.FindUserById(userId)
 
 	internal.WriteJsonResponse(w, user)
