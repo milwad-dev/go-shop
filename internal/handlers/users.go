@@ -1,14 +1,40 @@
 package handlers
 
 import (
-	"encoding/json"
+	"fmt"
+	"github.com/gorilla/mux"
+	"github.com/milwad-dev/go-shop/internal"
 	"github.com/milwad-dev/go-shop/internal/repositories"
+	"gorm.io/gorm"
 	"net/http"
+	"strconv"
 )
 
-func UserIndex(w http.ResponseWriter, r *http.Request) {
-	users := repositories.GetLatestUsers()
+type Handler struct {
+	repo *repositories.UserRepo
+}
 
-	w.Header().Set("Content-Type", "application-json")
-	json.NewEncoder(w).Encode(users)
+// SetRepositories => Set repositories
+func SetRepositories(db *gorm.DB) *Handler {
+	repo := repositories.NewUserRepo(db)
+
+	return &Handler{repo: repo}
+}
+
+// UserIndex => get the latest users with return json response
+func (handler *Handler) UserIndex(w http.ResponseWriter, r *http.Request) {
+	users := handler.repo.GetLatestUsers()
+
+	internal.WriteJsonResponse(w, users)
+}
+
+// UserShow => find user by id and show the user data
+func (handler *Handler) UserShow(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+	userId, _ := strconv.Atoi(id)
+
+	fmt.Println(id, userId)
+	user := handler.repo.FindUserById(userId)
+
+	internal.WriteJsonResponse(w, user)
 }
