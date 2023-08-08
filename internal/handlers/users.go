@@ -10,7 +10,8 @@ import (
 )
 
 type Handler struct {
-	repo *repositories.UserRepo
+	repo    *repositories.UserRepo
+	service *services.UserService
 }
 
 // SetRepositories => Set repositories
@@ -35,4 +36,9 @@ func (handler *Handler) UserShow(w http.ResponseWriter, r *http.Request) {
 	user := handler.repo.FindUserById(userId)
 
 	internal.WriteJsonResponse(w, user)
+}
+
+// UserDelete => find user by id then delete user
+func (handler Handler) UserDelete(w http.ResponseWriter, r *http.Request) {
+
 }

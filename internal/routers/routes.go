@@ -14,6 +14,7 @@ func InitRouters(db *gorm.DB) *mux.Router {
 	userRepo := handlers.SetRepositories(db)
 	r.HandleFunc("/users", userRepo.UserIndex).Methods(http.MethodGet)
 	r.HandleFunc("/users/{id}", userRepo.UserShow).Methods(http.MethodGet)
+	r.HandleFunc("/users/{id}", userRepo.UserDelete).Methods(http.MethodDelete)
 
 	// Return router instance
 	return r
