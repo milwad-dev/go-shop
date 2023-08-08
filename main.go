@@ -24,7 +24,7 @@ func main() {
 }
 
 func initDB() *gorm.DB {
-	dialector := mysql.Open("root:@tcp(127.0.0.1:3306)/go-shop?charset=utf8")
+	dialector := mysql.Open("root:@tcp(127.0.0.1:3306)/go-shop?charset=utf8&parseTime=True&loc=Local")
 	db, err := gorm.Open(dialector, &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
