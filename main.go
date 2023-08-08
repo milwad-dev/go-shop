@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
-	"github.com/milwad-dev/go-shop/internal/handlers"
 	"github.com/milwad-dev/go-shop/internal/models"
+	"github.com/milwad-dev/go-shop/internal/routers"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"net/http"
@@ -15,7 +14,7 @@ func main() {
 	db := initDB()
 
 	// Routes
-	r := initRouters(db)
+	r := routers.InitRouters(db)
 
 	fmt.Println("Application run on port :8080")
 	if err := http.ListenAndServe(":8080", r); err != nil {
@@ -34,16 +33,4 @@ func initDB() *gorm.DB {
 	db.AutoMigrate(&models.User{})
 
 	return db
-}
-
-func initRouters(db *gorm.DB) *mux.Router {
-	r := mux.NewRouter()
-
-	// Users routes
-	userRepo := handlers.SetRepositories(db)
-	r.HandleFunc("/users", userRepo.UserIndex)
-	r.HandleFunc("/users/{id}", userRepo.UserShow)
-
-	// Return router instance
-	return r
 }
