@@ -52,6 +52,7 @@ func (handler *Handler) UserShow(w http.ResponseWriter, r *http.Request) {
 	internal.WriteJsonResponse(w, user, 200)
 }
 
+// UserUpdate => update user by id and return json response
 func (handler *Handler) UserUpdate(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
