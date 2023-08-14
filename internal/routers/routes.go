@@ -16,6 +16,7 @@ func InitRouters(db *gorm.DB) *mux.Router {
 	r.HandleFunc("/users", userHandler.UserIndex).Methods(http.MethodGet)
 	r.HandleFunc("/users", userHandler.UserStore).Methods(http.MethodPost)
 	r.HandleFunc("/users/{id}", userHandler.UserShow).Methods(http.MethodGet)
+	r.HandleFunc("/users/{id}", userHandler.UserUpdate).Methods(http.MethodPatch)
 	r.HandleFunc("/users/{id}", userHandler.UserDelete).Methods(http.MethodDelete)
 
 	// Return router instance

@@ -46,3 +46,20 @@ func (service *UserService) StoreUser(r *http.Request) *models.User {
 
 	return &user
 }
+
+// UpdateUser => store user by data
+func (service *UserService) UpdateUser(id int, r *http.Request) *models.User {
+	password, _ := bcrypt.GenerateFromPassword([]byte(r.Form.Get("password")), bcrypt.DefaultCost)
+
+	var user models.User
+
+	service.db.First(&user, id)
+
+	service.db.Model(&user).Updates(map[string]interface{}{
+		"name":     r.Form.Get("name"),
+		"email":    r.Form.Get("email"),
+		"password": string(password),
+	})
+
+	return &user
+}

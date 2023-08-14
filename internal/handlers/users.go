@@ -52,6 +52,17 @@ func (handler *Handler) UserShow(w http.ResponseWriter, r *http.Request) {
 	internal.WriteJsonResponse(w, user, 200)
 }
 
+func (handler *Handler) UserUpdate(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	id := mux.Vars(r)["id"]
+	userId, _ := strconv.Atoi(id)
+
+	user := handler.service.UpdateUser(userId, r)
+
+	internal.WriteJsonResponse(w, user, 201)
+}
+
 // UserDelete => find user by id then delete user
 func (handler *Handler) UserDelete(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
@@ -61,6 +72,6 @@ func (handler *Handler) UserDelete(w http.ResponseWriter, r *http.Request) {
 
 	data := make(map[string]any)
 	data["message"] = "user delete successfully."
-	
+
 	internal.WriteJsonResponse(w, data, 200)
 }
