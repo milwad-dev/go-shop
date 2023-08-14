@@ -33,6 +33,15 @@ func (handler *Handler) UserIndex(w http.ResponseWriter, r *http.Request) {
 	internal.WriteJsonResponse(w, users, 200)
 }
 
+// UserStore => get the latest users with return json response
+func (handler *Handler) UserStore(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	user := handler.service.StoreUser(r)
+
+	internal.WriteJsonResponse(w, user, 201)
+}
+
 // UserShow => find user by id and show the user data
 func (handler *Handler) UserShow(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
@@ -52,5 +61,6 @@ func (handler *Handler) UserDelete(w http.ResponseWriter, r *http.Request) {
 
 	data := make(map[string]any)
 	data["message"] = "user delete successfully."
+	
 	internal.WriteJsonResponse(w, data, 200)
 }
